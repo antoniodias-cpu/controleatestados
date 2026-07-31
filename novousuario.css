@@ -1,0 +1,15 @@
+.card-register {
+  width: min(680px, 100%);
+}
+
+.actions-register {
+  margin-top: 18px;
+}
+
+#btn-voltar {
+  background: #2f6fdd;
+}
+
+#btn-voltar:hover {
+  background: #275fbc;
+}

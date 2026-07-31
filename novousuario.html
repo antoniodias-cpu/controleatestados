@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Novo Usuário - Gestão e Controle de Atestados</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="novousuario.css" />
+</head>
+<body>
+  <main class="card card-register" aria-label="Cadastro de Novo Usuário">
+    <h1 class="title-box">Registro de Novo Usuário</h1>
+    <p class="subtitle-box">Preencha os dados para criar sua conta</p>
+
+    <form id="register-form">
+      <div class="field">
+        <label for="register-name">Nome</label>
+        <input id="register-name" name="name" type="text" placeholder="Nome completo" autocomplete="name" required />
+      </div>
+
+      <div class="field">
+        <label for="register-city">Cidade</label>
+        <input id="register-city" name="city" type="text" placeholder="Cidade" autocomplete="address-level2" required />
+      </div>
+
+      <div class="field">
+        <label for="register-email">E-mail</label>
+        <input id="register-email" name="email" type="email" placeholder="usuario@exemplo.com" autocomplete="email" required />
+      </div>
+
+      <div class="field">
+        <label for="register-password">Nova senha</label>
+        <input id="register-password" name="password" type="password" placeholder="Mínimo de 6 caracteres" autocomplete="new-password" minlength="6" required />
+      </div>
+
+      <div class="actions actions-register">
+        <button id="btn-cadastrar" type="submit">Cadastrar usuário</button>
+        <button id="btn-voltar" type="button">Voltar para login</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="novousuario.js"></script>
+</body>
+</html>

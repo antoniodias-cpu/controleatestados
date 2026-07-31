@@ -5,20 +5,61 @@ const loginButton = document.getElementById("btn-entrar");
 const recoverButton = document.getElementById("btn-recuperar");
 const registerButton = document.getElementById("btn-registrar");
 
-const supabaseConfig = window.SUPABASE_CONFIG || {};
-const hasConfig =
-  typeof supabaseConfig.url === "string" &&
-  typeof supabaseConfig.anonKey === "string" &&
-  !supabaseConfig.url.includes("COLE_AQUI") &&
-  !supabaseConfig.anonKey.includes("COLE_AQUI");
-
-const supabaseClient =
-  hasConfig && window.supabase
-    ? window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey)
-    : null;
+let supabaseClient = null;
+let supabaseClientPromise = null;
 
 function showMessage(message) {
   window.alert(message);
+}
+
+function isConfigured(config) {
+  return (
+    config &&
+    typeof config.url === "string" &&
+    typeof config.anonKey === "string" &&
+    config.url.trim() !== "" &&
+    config.anonKey.trim() !== "" &&
+    !config.url.includes("COLE_AQUI") &&
+    !config.anonKey.includes("COLE_AQUI")
+  );
+}
+
+async function loadSupabaseConfig() {
+  const localConfig = window.SUPABASE_CONFIG || {};
+
+  if (isConfigured(localConfig)) {
+    return localConfig;
+  }
+
+  const response = await fetch("/api/config");
+
+  if (!response.ok) {
+    throw new Error("Não foi possível carregar a configuração do Supabase.");
+  }
+
+  const remoteConfig = await response.json();
+  return remoteConfig;
+}
+
+async function getSupabaseClient() {
+  if (supabaseClient) {
+    return supabaseClient;
+  }
+
+  if (!supabaseClientPromise) {
+    supabaseClientPromise = (async () => {
+      const config = await loadSupabaseConfig();
+
+      if (!isConfigured(config) || !window.supabase) {
+        throw new Error("Configure o Supabase antes de usar o login.");
+      }
+
+      supabaseClient = window.supabase.createClient(config.url, config.anonKey);
+      return supabaseClient;
+    })();
+  }
+
+  return supabaseClientPromise;
 }
 
 function setLoading(isLoading) {
@@ -41,24 +82,9 @@ function getCredentials() {
   return { email, password };
 }
 
-function ensureSupabaseConfigured() {
-  if (supabaseClient) {
-    return true;
-  }
-
-  showMessage(
-    "Configure o arquivo supabase-config.js com URL e ANON KEY do projeto Supabase."
-  );
-  return false;
-}
-
 if (loginForm) {
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-
-    if (!ensureSupabaseConfigured()) {
-      return;
-    }
 
     const { email, password } = getCredentials();
 
@@ -69,8 +95,9 @@ if (loginForm) {
 
     try {
       setLoading(true);
+      const client = await getSupabaseClient();
 
-      const { error } = await supabaseClient.auth.signInWithPassword({
+      const { error } = await client.auth.signInWithPassword({
         email,
         password
       });
@@ -92,10 +119,6 @@ if (loginForm) {
 
 if (recoverButton) {
   recoverButton.addEventListener("click", async () => {
-    if (!ensureSupabaseConfigured()) {
-      return;
-    }
-
     const { email } = getCredentials();
 
     if (!email) {
@@ -105,8 +128,9 @@ if (recoverButton) {
 
     try {
       setLoading(true);
+      const client = await getSupabaseClient();
 
-      const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+      const { error } = await client.auth.resetPasswordForEmail(email, {
         redirectTo: window.location.href
       });
 

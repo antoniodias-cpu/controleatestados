@@ -127,6 +127,6 @@ if (recoverButton) {
 
 if (registerButton) {
   registerButton.addEventListener("click", () => {
-    window.location.href = "novousuario.html";
+    window.location.assign("novousuario.html");
   });
 }

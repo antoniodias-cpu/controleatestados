@@ -24,6 +24,16 @@ function isConfigured(config) {
   );
 }
 
+function buildConfigErrorMessage(remoteConfig) {
+  const missing = Array.isArray(remoteConfig?.missing) ? remoteConfig.missing : [];
+
+  if (missing.length === 0) {
+    return "Nao foi possivel carregar a configuracao do Supabase.";
+  }
+
+  return `Configuracao do Supabase incompleta. Variaveis faltando: ${missing.join(", ")}.`;
+}
+
 async function loadSupabaseConfig() {
   const localConfig = window.SUPABASE_CONFIG || {};
 
@@ -37,7 +47,13 @@ async function loadSupabaseConfig() {
     throw new Error("Nao foi possivel carregar a configuracao do Supabase.");
   }
 
-  return response.json();
+  const remoteConfig = await response.json();
+
+  if (!isConfigured(remoteConfig)) {
+    throw new Error(buildConfigErrorMessage(remoteConfig));
+  }
+
+  return remoteConfig;
 }
 
 async function getSupabaseClient() {

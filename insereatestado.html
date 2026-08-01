@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inserir Atestado</title>
+  <link rel="stylesheet" href="insereatestado.css" />
+</head>
+<body>
+  <main class="panel" aria-label="Cadastro de atestado">
+    <header class="panel-header">
+      <h1>Cadastro de Atestado</h1>
+      <p>Preencha os campos para registrar um novo atestado.</p>
+    </header>
+
+    <form id="atestado-form" class="form-grid">
+      <div class="field field-full">
+        <label for="nome-completo">Nome Completo</label>
+        <input id="nome-completo" name="nomeCompleto" type="text" required />
+      </div>
+
+      <div class="field">
+        <label for="turma">Turma</label>
+        <input id="turma" name="turma" type="text" required />
+      </div>
+
+      <div class="field">
+        <label for="turno">Turno</label>
+        <input id="turno" name="turno" type="text" required />
+      </div>
+
+      <div class="field">
+        <label for="data-entrega">Data da Entrega</label>
+        <input id="data-entrega" name="dataEntrega" type="date" required />
+      </div>
+
+      <div class="field">
+        <label for="data-inicio">Data de Início</label>
+        <input id="data-inicio" name="dataInicio" type="date" required />
+      </div>
+
+      <div class="field">
+        <label for="data-termino">Data de Término</label>
+        <input id="data-termino" name="dataTermino" type="date" required />
+      </div>
+
+      <div class="field">
+        <label for="hora-inicio">Hora de Início</label>
+        <input id="hora-inicio" name="horaInicio" type="time" required />
+      </div>
+
+      <div class="field">
+        <label for="hora-termino">Hora Término</label>
+        <input id="hora-termino" name="horaTermino" type="time" required />
+      </div>
+
+      <div class="field field-full">
+        <label for="motivo">Motivo do Atestado</label>
+        <textarea id="motivo" name="motivo" rows="4" required></textarea>
+      </div>
+
+      <div class="actions field-full">
+        <button id="btn-gravar" type="submit">Gavar Dados</button>
+        <button id="btn-consultar" type="button">Consultar Atestados</button>
+        <button id="btn-sair" type="button">Sair</button>
+      </div>
+    </form>
+
+    <section class="list-section" aria-label="Lista de atestados">
+      <h2>Atestados Cadastrados</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome Completo</th>
+              <th>Turma</th>
+              <th>Turno</th>
+              <th>Data da Entrega</th>
+              <th>Data de Início</th>
+              <th>Data de Término</th>
+              <th>Hora de Início</th>
+              <th>Hora Término</th>
+              <th>Motivo do Atestado</th>
+            </tr>
+          </thead>
+          <tbody id="atestado-tbody">
+            <tr>
+              <td colspan="9" class="status">Nenhum atestado cadastrado.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="insereatestado.js"></script>
+</body>
+</html>

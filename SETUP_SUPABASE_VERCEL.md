@@ -13,7 +13,10 @@ Crie as variáveis no arquivo `.env` e também no painel da Vercel:
 ```env
 SUPABASE_URL=https://SEU-PROJETO.supabase.co
 SUPABASE_ANON_KEY=SUA_ANON_PUBLIC_KEY
+SUPABASE_SERVICE_ROLE_KEY=SUA_SERVICE_ROLE_KEY
 ```
+
+> A `SUPABASE_SERVICE_ROLE_KEY` deve ficar apenas no backend (API da Vercel). Nunca use no navegador.
 
 ## 3) Como o frontend lê essas variáveis
 O navegador não lê `.env` diretamente. O projeto usa a rota `/api/config`, que devolve os valores do ambiente da Vercel para o JavaScript da página.
@@ -36,6 +39,7 @@ Se quiser testar localmente sem a API, também pode preencher `supabase-config.j
 1. Registro: digite e-mail e senha e clique em Registrar novo usuário.
 2. Login: use o mesmo e-mail e senha e clique em Entrar.
 3. Recuperação: informe e-mail e clique em Recuperar Senha.
+4. Listagem: abra `/usuarios.html` para ver a tabela de usuários carregada pela API `/api/users`.
 
 ## Observações de segurança
 - A anon key pode ficar no frontend.

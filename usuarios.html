@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usuários Cadastrados</title>
+  <link rel="stylesheet" href="usuarios.css" />
+</head>
+<body>
+  <main class="panel" aria-label="Tabela de usuários cadastrados">
+    <header class="panel-header">
+      <h1>Usuários Cadastrados</h1>
+      <p>Dados sincronizados com o Supabase via API no Vercel.</p>
+    </header>
+
+    <div class="toolbar">
+      <button id="btn-atualizar" type="button">Atualizar lista</button>
+      <button id="btn-voltar" type="button">Voltar ao login</button>
+    </div>
+
+    <div class="table-wrap">
+      <table aria-describedby="table-description">
+        <caption id="table-description">Relação de usuários por nome, cidade, e-mail e senha protegida.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Cidade</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Senha</th>
+          </tr>
+        </thead>
+        <tbody id="users-tbody">
+          <tr>
+            <td colspan="4" class="status">Carregando usuários...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="usuarios.js"></script>
+</body>
+</html>

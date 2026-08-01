@@ -4,6 +4,7 @@ const passwordInput = document.getElementById("password");
 const loginButton = document.getElementById("btn-entrar");
 const recoverButton = document.getElementById("btn-recuperar");
 const registerButton = document.getElementById("btn-registrar");
+const usersButton = document.getElementById("btn-usuarios");
 
 let supabaseClient = null;
 let supabaseClientPromise = null;
@@ -73,6 +74,10 @@ function setLoading(isLoading) {
 
   if (registerButton) {
     registerButton.disabled = isLoading;
+  }
+
+  if (usersButton) {
+    usersButton.disabled = isLoading;
   }
 }
 
@@ -152,5 +157,11 @@ if (recoverButton) {
 if (registerButton) {
   registerButton.addEventListener("click", () => {
     window.location.assign("novousuario.html");
+  });
+}
+
+if (usersButton) {
+  usersButton.addEventListener("click", () => {
+    window.location.assign("usuarios.html");
   });
 }

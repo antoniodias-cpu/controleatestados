@@ -16,6 +16,11 @@ SUPABASE_ANON_KEY=SUA_ANON_PUBLIC_KEY
 SUPABASE_SERVICE_ROLE_KEY=SUA_SERVICE_ROLE_KEY
 ```
 
+O backend tambem aceita nomes alternativos de variaveis:
+- URL: `NEXT_PUBLIC_SUPABASE_URL` ou `VITE_SUPABASE_URL`
+- ANON KEY: `NEXT_PUBLIC_SUPABASE_ANON_KEY` ou `VITE_SUPABASE_ANON_KEY`
+- SERVICE ROLE: `SUPABASE_SERVICE_KEY` ou `SUPABASE_SECRET_KEY`
+
 > A `SUPABASE_SERVICE_ROLE_KEY` deve ficar apenas no backend (API da Vercel). Nunca use no navegador.
 
 ## 3) Como o frontend lê essas variáveis
@@ -38,8 +43,16 @@ Se quiser testar localmente sem a API, também pode preencher `supabase-config.j
 ## 6) Testar fluxos
 1. Registro: digite e-mail e senha e clique em Registrar novo usuário.
 2. Login: use o mesmo e-mail e senha e clique em Entrar.
-3. Recuperação: informe e-mail e clique em Recuperar Senha.
-4. Listagem: abra `/usuarios.html` para ver a tabela de usuários carregada pela API `/api/users`.
+3. Cadastro de atestado: após login, a página `/insereatestado.html` grava em Supabase pela API `/api/atestados`.
+4. Consulta de atestados: use o botão Consultar Atestados para recarregar os dados salvos no banco.
+5. Recuperação: informe e-mail e clique em Recuperar Senha.
+6. Listagem de usuários (admin): abra `/usuarios.html` para ver a tabela de usuários via API `/api/users`.
+
+## 7) Criar tabelas e políticas
+Execute o arquivo `supabase-schema.sql` no SQL Editor do Supabase para criar:
+- `public.user_profiles`
+- `public.atestados`
+- políticas RLS necessárias
 
 ## Observações de segurança
 - A anon key pode ficar no frontend.

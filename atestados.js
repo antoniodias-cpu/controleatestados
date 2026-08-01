@@ -12,6 +12,18 @@ function extractBearerToken(authorizationHeader) {
   return value.slice(7).trim();
 }
 
+function readEnv(...names) {
+  for (const name of names) {
+    const value = process.env[name];
+
+    if (typeof value === "string" && value.trim() !== "") {
+      return value.trim();
+    }
+  }
+
+  return "";
+}
+
 function mapAtestadoInput(body) {
   return {
     nome_completo: String(body?.nomeCompleto || "").trim(),
@@ -63,9 +75,9 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Metodo nao permitido." });
   }
 
-  const url = process.env.SUPABASE_URL || "";
-  const anonKey = process.env.SUPABASE_ANON_KEY || "";
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+  const url = readEnv("SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_URL", "VITE_SUPABASE_URL");
+  const anonKey = readEnv("SUPABASE_ANON_KEY", "NEXT_PUBLIC_SUPABASE_ANON_KEY", "VITE_SUPABASE_ANON_KEY");
+  const serviceRoleKey = readEnv("SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_SERVICE_KEY", "SUPABASE_SECRET_KEY");
 
   if (!url || !anonKey || !serviceRoleKey) {
     return res.status(500).json({

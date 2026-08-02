@@ -1,0 +1,6 @@
+{
+  "name": "Sistema de Gestão de Atestados",
+  "description": "Aplicativo para gerenciamento, consulta e emissão de relatórios PDF de atestados acadêmicos por curso, turno e período.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
